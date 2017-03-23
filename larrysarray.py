@@ -8,7 +8,7 @@ for _ in range(T):
         for j in range(i+1,N):
             if A[i] > A[j]: 
                 inv += 1
-    if N & 1 and inv & 1 == 0 or N & 1 == 0 and inv & 1 == 0:
+    if inv & 1 == 0:
         print("YES")
     else:
         print("NO")
