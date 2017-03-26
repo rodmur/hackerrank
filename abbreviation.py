@@ -1,37 +1,29 @@
 #!/usr/bin/python3
 
-import re, string
+def kill(a,b):
+    n = len(a)
+    m = len(b)
+    d = [[False for col in range(n+1)] for row in range(n+1)]
 
-q = int(input())
+    d[0][0] = True
+    for i in range(n+1):
+        for j in range(n+1):
+            if i < n and a[i].islower():
+                d[i + 1][j] |= d[i][j]
+            if i < n and j < m and a[i].upper() == b[j]:
+                d[i + 1][j + 1] |= d[i][j]
 
+    print("YES") if d[n][m] else print("NO") 
 
-for _ in range(q):
-    a = input().strip()
-    b = input().strip()
+def main():
+    q = int(input())
+    for _ in range(q):
+        a = input().strip()
+        b = input().strip()
+        kill(a,b)
 
-    pos = 0
-    ok = True
-    for k in range(len(b)):
-        if k < len(b) - 1:
-            patc = re.compile(r'%s\w*[%s%s]' % (b[k],b[k+1].lower(),b[k+1]))
-            patl = re.compile(r'%s\w*[%s%s]' % (b[k].lower(),b[k+1].lower(),b[k+1]))
-        else:
-            patc = re.compile(b[k])
-            patl = re.compile(b[k].lower())
+    return
 
-        m = patc.search(a,pos)
-        if m is None:
-            m = patl.search(a,pos)
-            if m is None:
-                ok = False
-                break
-        pos = m.start()
-        if a[pos].islower():
-            a = a[:pos] + b[k] + a[pos+1:]
-        pos += 1
+if __name__ == "__main__":
+    main()
 
-    a = a.translate({ord(c): None for c in string.ascii_lowercase})
-    if (b == a) and ok:
-        print("YES")
-    else:
-        print("NO")
