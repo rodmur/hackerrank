@@ -13,7 +13,6 @@ for i in range(1,5):
         topsum = arr[i-1][j-1] + arr[i-1][j] + arr[i-1][j+1]
         bottomsum = arr[i+1][j-1] + arr[i+1][j] + arr[i+1][j+1]
         total = topsum + bottomsum + arr[i][j]
-        print("total: %d\n" % total)
         if (total > hightotal):
             hightotal = total
 print(hightotal)
